@@ -1,6 +1,5 @@
 # Docker project
-In this test I have set up django and postgres docker containers.
-the password is assigned to an environment variable in both containers
+In this test I have set up django and postgres containers using docker
 
 ## How it works
 
@@ -62,7 +61,7 @@ VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
 ```
 
-### Configuring the containers using docker compose
+### Building the containers using docker compose
 ```
 version: '3'
 
