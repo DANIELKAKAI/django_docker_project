@@ -2,6 +2,8 @@
  
  
 FROM ubuntu:14.04
+
+ENV PG_DB_PASS password
  
 # Add the PostgreSQL PGP key to verify their Debian packages.
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
@@ -27,8 +29,8 @@ USER postgres
 # Note: here we use ``&&\`` to run commands one after the other - the ``\``
 #       allows the RUN command to span multiple lines.
 RUN    /etc/init.d/postgresql start &&\
-    psql --command "CREATE USER postgresondocker WITH SUPERUSER PASSWORD 'postgresondocker';" &&\
-    createdb -O postgresondocker postgresondocker
+    psql --command "CREATE USER daniel WITH SUPERUSER PASSWORD '$PG_DB_PASS';" &&\
+    createdb -O daniel my_database
  
 # Adjust PostgreSQL configuration so that remote connections to the
 # database are possible.

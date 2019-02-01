@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'my_database',
         'USER':'daniel',
         'HOST':'postgresdb',
-        'PASSWORD':os.getenv('PG_DB_PASS',''),
+        'PASSWORD':os.environ['PG_DB_PASS'],
         'PORT':5432
     }
 }
