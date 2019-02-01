@@ -2,6 +2,8 @@ FROM python:3
 
 ENV PYTHONUNBUFFERED 1
 
+ENV PG_DB_PASS password
+
 RUN mkdir /django-docker
 
 WORKDIR /django-docker
@@ -9,5 +11,6 @@ WORKDIR /django-docker
 ADD requirements.txt /django-docker/
 
 RUN pip install -r requirements.txt
+
 
 ADD . /django-docker/
