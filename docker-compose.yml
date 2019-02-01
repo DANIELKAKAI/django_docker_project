@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  web:
+    container_name: django-app
+    build:
+      context: .
+      dockerfile: Dockerfile.django
+    environment:
+      - PG_DB_PASS=password
+    command: 
+      - python manage.py makemigrations 
+      - python manage.py migrate
+      - python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/django-docker
+    restart: always
+    ports:
+      - "8000:8000"
+    links:
+      - postgresdb
+  postgresdb:
+    container_name: postgresdb
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - PG_DB_PASS=password
+
+volumes:
+  postgres_data:
