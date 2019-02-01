@@ -6,12 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.django
-    environment:
-      - PG_DB_PASS=password
-    command: 
-      - python3 manage.py makemigrations 
-      - python3 manage.py migrate
-      - python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/django-docker
     restart: always
