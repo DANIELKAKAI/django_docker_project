@@ -11,7 +11,7 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    links:
+    depends_on:
       - postgresdb
   postgresdb:
     container_name: postgresdb
