@@ -14,17 +14,8 @@ services:
     depends_on:
       - postgresdb
   postgresdb:
-    container_name: postgresdb
-    build:
-      context: .
-      dockerfile: Dockerfile-postgres
-    restart: always
-    ports:
-      - '5432:5432'
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - PG_DB_PASS=password
+    image: postgres
+    
 
 volumes:
   postgres_data:
