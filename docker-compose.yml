@@ -11,11 +11,20 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    depends_on:
+    links:
       - postgresdb
   postgresdb:
-    image: postgres
-    
+    container_name: postgresdb
+    build:
+      context: .
+      dockerfile: Dockerfile-postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - PG_DB_PASS=password
 
 volumes:
   postgres_data:
