@@ -3,11 +3,13 @@ In this test I have set up django and postgres containers using docker
 
 ## How it works
 
-### Pulling a python image
+### Pulling a python image and setting up django
 ```
 FROM python:3
 
 ENV PYTHONUNBUFFERED 1
+
+ENV PG_DB_PASS password
 
 
 RUN mkdir /django-docker
@@ -22,10 +24,15 @@ ADD . /django-docker/
 
 EXPOSE 8000
 
+RUN python manage.py makemigrations 
+RUN python manage.py migrate
+RUN python manage.py runserver 0.0.0.0:8000
+
+
 
 
 ```
-### Setting up postgres using ubuntu image
+### Setting up postgres in an ubuntu image
 ```
 
  
@@ -70,13 +77,7 @@ services:
     container_name: django-app
     build:
       context: .
-      dockerfile: Dockerfile.django
-    environment:
-      - PG_DB_PASS=password
-    command: 
-      - python manage.py makemigrations 
-      - python manage.py migrate
-      - python manage.py runserver 0.0.0.0:8000
+      dockerfile: Dockerfile-django
     volumes:
       - .:/django-docker
     restart: always
@@ -88,7 +89,7 @@ services:
     container_name: postgresdb
     build:
       context: .
-      dockerfile: Dockerfile.postgres
+      dockerfile: Dockerfile-postgres
     restart: always
     ports:
       - '5432:5432'
